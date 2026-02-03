@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Survey Results</h1>
+
+    <div class="result">
+      <h3>Your Submission</h3>
+
+      <p><strong>Name:</strong> {{ name }}</p>
+      <p><strong>Favorite Color:</strong> {{ favorite_color }}</p>
+      <p><strong>Feedback:</strong> {{ feedback }}</p>
+    </div>
+
+    <a class="back-link" href="/">← Back to Survey</a>
+  </div>
+</body>
+</html>

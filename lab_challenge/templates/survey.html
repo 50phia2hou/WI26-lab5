@@ -21,6 +21,23 @@
                  - Contains input fields for: name, favorite_color, feedback
                  - Has a submit button
             -->
+            <form action="/submit-ssr" method="post">
+                <div class="form-group">
+                    <label for="name-ssr">Your Name:</label>
+                    <input type="text" id="name-ssr" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="favorite_color-ssr">Your Favorite Color:</label>
+                    <textarea id="favorite_color-ssr" name="favorite_color" rows="3" required></textarea>
+                </div>
+               
+                <div class="form-group">
+                    <label for="feedback-ssr">Your Feedback:</label>
+                    <textarea id="feedback-ssr" name="feedback" rows="3" required></textarea>
+                </div>
+                <button type="submit">Submit (SSR)</button>
+            </form>
 
             <!-- SSR Result displays here after form submission (page reloads) -->
             {% if ssr_result %}
@@ -43,12 +60,30 @@
                  - Contains input fields for: name, favorite_color, feedback
                  - Has a submit button
             -->
+            <form id="api-form">
+                <div class="form-group">
+                    <label for="name-api">Your Name:</label>
+                    <input type="text" id="name-api" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="favorite_color-api">Your Favorite Color:</label>
+                    <textarea id="favorite_color-api" name="favorite_color" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-api">Your Feedback:</label>
+                    <textarea id="feedback-api" name="feedback" rows="3" required></textarea>
+                </div>
+
+                <button type="submit">Submit (fetch)</button>
+            </form>
 
             <!-- Result displays here without page reload -->
             <div id="api-result" class="result" style="display: none;">
                 <h3>Your Response:</h3>
                 <p><strong>Name:</strong> <span id="result-name"></span></p>
-                <p><strong>Color:</strong> <span id="result-color"></span></p>
+                <p><strong>Color:</strong> <span id="result-favorite_color"></span></p>
                 <p><strong>Feedback:</strong> <span id="result-feedback"></span></p>
             </div>
         </section>

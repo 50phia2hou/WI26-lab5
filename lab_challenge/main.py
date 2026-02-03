@@ -13,12 +13,21 @@ templates = Jinja2Templates(directory="templates")
 
 
 # TODO 1: Create a Pydantic model for the survey data (name, favorite_color, feedback)
-# Hint: class SurveyData(BaseModel): ...
-
+# Hint: 
+class SurveyData(BaseModel): 
+    name: str
+    favorite_color: str
+    feedback: str
 
 # TODO 2: Create a GET route at "/" that serves the survey.html template
 # Hint: Use templates.TemplateResponse(request, "survey.html", {})
-
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "survey.html", 
+        {}
+    )
 
 # =============================================================================
 # SSR Endpoint (Server-Side Rendering)
@@ -29,6 +38,21 @@ templates = Jinja2Templates(directory="templates")
 #   - Returns survey.html template with the results (same page, inline results)
 # Hint: return templates.TemplateResponse(request, "survey.html",
 #           {"ssr_result": {"name": name, "favorite_color": favorite_color, "feedback": feedback}})
+
+# SZ - API returns JSON
+@app.post("/submit-ssr", response_class=HTMLResponse)
+async def handle_form_ssr(request: Request, name: str = Form(...), favorite_color: str = Form(...), feedback: str = Form(...)):
+    """
+    SSR approach: Returns the same page with results included.
+
+    Form(...) tells FastAPI to get these values from form data.
+    The '...' means the field is required.
+    """
+    return templates.TemplateResponse(
+        request,
+        "survey.html",
+        {"ssr_result": {"name": name, "favorite_color": favorite_color, "feedback": feedback}}
+    )
 
 
 # =============================================================================
@@ -41,6 +65,19 @@ templates = Jinja2Templates(directory="templates")
 # Hint: async def submit_api(data: SurveyData):
 #       return {"success": True, "name": data.name, ...}
 
+@app.post("/submit-api")
+async def handle_form_api(data: SurveyData):
+    """
+    API approach: Returns JSON data.
+
+    JavaScript on the client will use this data to update the page.
+    """
+    return {
+        "success": True,
+        "name": data.name,
+        "favorite_color": data.favorite_color,
+        "feedback": data.feedback
+    }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
